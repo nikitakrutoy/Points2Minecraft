@@ -1,0 +1,4 @@
+numpy
+click
+scikit-image
+tqdm
