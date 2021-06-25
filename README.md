@@ -10,6 +10,16 @@ The map from colors to Minecraft block is done using idea from [here](https://pr
 For minecraft level modification I used pymclevel which only supports python2. That is the reason for 2 requirements files.
 voxelize.py runs on python3, add2mc runs on python2.
 
+
+## Pretty Images
+Examples of voxelizations using open3d API
+
+![](resources/images/screenshot.png)
+
+Result in Minecraft
+
+![YouTube](https://youtu.be/6mpioX92Nrk)
+
 ## Usage
 ```
 python3 voxelize.py [OPTIONS]
