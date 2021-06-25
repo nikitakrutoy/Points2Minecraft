@@ -10,11 +10,16 @@ Scaler = MinMaxScaler()
 
 
 @click.command()
-@click.argument('filename', type=click.Path(exists=True, dir_okay=False))
-@click.argument('output_path', type=click.Path(exists=False, dir_okay=True, file_okay=False))
-@click.option('-s', '--scale', default=1000, type=int)
-@click.option('-v', '--voxel', 'voxel_size', default=0.1, type=float)
+@click.option('-f', '--filename', type=click.Path(exists=True, dir_okay=False), 
+    help="Path to .las point cloud")
+@click.option('-o', '--output_path', type=click.Path(exists=False, dir_okay=True, file_okay=False), 
+    help="Where voxel data will be stored")
+@click.option('-s', '--scale', default=1000, type=int, 
+    help="A variable to scale points coords")
+@click.option('-v', '--voxel', 'voxel_size', default=0.1, type=float, 
+    help="How big are voxels gonna be")
 def voxelize(filename, output_path, scale, voxel_size, ):
+    '''Turns point cloud into voxel grid'''
     f = laspy.file.File(filename)
     points = f.points["point"][["X", "Y", "Z"]]
     colors = f.points["point"][["red", "green", "blue"]]
@@ -23,7 +28,7 @@ def voxelize(filename, output_path, scale, voxel_size, ):
     colors = np.array(colors.tolist())
 
     points = points / scale
-    colors_fit = s.fit_transform(colors)
+    colors_fit = Scaler.fit_transform(colors)
 
 
     pcd = o3d.geometry.PointCloud()
@@ -49,3 +54,6 @@ def voxelize(filename, output_path, scale, voxel_size, ):
 
 def main():
     voxelize()
+
+if __name__ == "__main__":
+    main()
