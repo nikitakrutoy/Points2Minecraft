@@ -12,13 +12,14 @@ voxelize.py runs on python3, add2mc runs on python2.
 
 
 ## Pretty Images
-Examples of voxelizations using open3d API
+Examples of voxelizations using open3d API of school campus point cloud.
 
 ![](resources/images/screenshot.png)
 
-Result in Minecraft
+Video result in Minecraft: https://youtu.be/6mpioX92Nrk
 
-![YouTube](https://youtu.be/6mpioX92Nrk)
+[![](https://img.youtube.com/vi/6mpioX92Nrk/0.jpg)](https://www.youtube.com/watch?v=6mpioX92Nrk)
+
 
 ## Usage
 ```
