@@ -7,9 +7,10 @@ You can voxelize you .las files with voxelize.py and then add them to your Minec
 
 The map from colors to Minecraft block is done using idea from [here](https://projects.raspberrypi.org/en/projects/minecraft-selfies/5)
 
-For minecraft level modification I used pymclevel which only supports python2. That is the reason for 2 requirements files.
+For minecraft level modification I used [pymclevel](https://github.com/mcedit/pymclevel) which only supports python2. That is the reason for 2 requirements files.
 voxelize.py runs on python3, add2mc runs on python2.
 
+Tested on Minecraft 1.8
 
 ## Pretty Images
 Examples of voxelizations using open3d API of school campus point cloud.
@@ -34,6 +35,7 @@ Options:
   -v, --voxel FLOAT            How big are voxels gonna be
   --help                       Show this message and exit.
 ```
+Clone [pymclevel](https://github.com/mcedit/pymclevel) into rootdir, before running add2mc.py 
 ```
 python2 add2mc.py [OPTIONS]
 

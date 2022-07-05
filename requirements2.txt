@@ -2,3 +2,5 @@ numpy
 click
 scikit-image
 tqdm
+scipy
+pyyaml

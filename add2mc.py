@@ -16,21 +16,21 @@ from tqdm.auto import tqdm
     help="Map from colors to Minecraft block ids")
 @click.option('-mp', 'map_path', type=click.Path(exists=True, dir_okay=True, file_okay=False),   
     help="Which map to modify")
-@click.option("-p", "--postion", type=float, nargs=2, default=None, 
+@click.option("-p", "--position", type=float, nargs=2, default=None, 
     help="Where to build. If not specified, builds near spawn")
 def add2mc(voxel_data, color_map_png, color_map_pkl, map_path, position):
     '''Places voxels in Minecraft'''
     indeces = np.load(voxel_data + "/indeces.npy")
-    box_size = np.load(voxel_data + "/icolors.npy")
-    colors = np.load(voxel_data + "/bb.npy")
-    
+    box_size = np.load(voxel_data + "/bb.npy")
+    colors = np.load(voxel_data + "/icolors.npy")
+
     map_rgb = io.imread(color_map_png)
     map_lab = color.rgb2lab(map_rgb)
     with open(color_map_pkl, "rb") as f:
         color_map = pickle.load(f)
 
     level = mclevel.fromFile(map_path)
-    if position is None:
+    if not position:
         spawn = np.array(level.playerSpawnPosition())
         offset = np.array((10, 0, 10))
         position = spawn + offset
@@ -62,11 +62,13 @@ def add2mc(voxel_data, color_map_png, color_map_pkl, map_path, position):
     blockID = 1
     data = 0
     blockInfo = level.materials.blockWithID(blockID, data)
-    for pos, c in tqdm(zip(indeces, colors)):
-        blockInfo = level.materials.blockWithID(*color2block(c))
+    for i, (pos, c) in enumerate(tqdm(zip(indeces, colors))):
+        block = color2block(c)
+        blockInfo = level.materials.blockWithID(*block)
         bb_ = box.BoundingBox((position + pos).tolist(), (1, 1, 1))
         level.fillBlocks(bb_, blockInfo)
-    level.saveInPlace()
+        if i % 10000 == 0:
+            level.saveInPlace()
     print("Done!")
 
 def main():
